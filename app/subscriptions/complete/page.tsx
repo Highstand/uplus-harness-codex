@@ -1,3 +1,2 @@
-export default function SubscriptionCompletePage() {
-  return <main><h1>신청 완료 시연</h1></main>;
-}
+import { CompleteScreen, ScreenBoundary } from "@/components/plan-screens";
+export default function CompletePage() { return <ScreenBoundary kind="complete"><CompleteScreen /></ScreenBoundary>; }

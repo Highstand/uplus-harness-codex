@@ -1,3 +1,5 @@
-export default function PlanDetailPage() {
-  return <main><h1>요금제 상세</h1></main>;
+import { DetailScreen, ScreenBoundary } from "@/components/plan-screens";
+export default async function PlanDetailPage({ params }: { params: Promise<{ planId: string }> }) {
+  const { planId } = await params;
+  return <ScreenBoundary kind="detail"><DetailScreen planId={planId} /></ScreenBoundary>;
 }

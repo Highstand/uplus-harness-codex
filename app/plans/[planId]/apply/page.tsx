@@ -1,3 +1,5 @@
-export default function PlanApplyPage() {
-  return <main><h1>변경 신청</h1></main>;
+import { ApplyScreen, ScreenBoundary } from "@/components/plan-screens";
+export default async function ApplyPage({ params }: { params: Promise<{ planId: string }> }) {
+  const { planId } = await params;
+  return <ScreenBoundary kind="apply"><ApplyScreen planId={planId} /></ScreenBoundary>;
 }

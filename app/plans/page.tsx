@@ -1,3 +1,2 @@
-export default function PlansPage() {
-  return <main><h1>요금제 목록</h1></main>;
-}
+import { PlansScreen, ScreenBoundary } from "@/components/plan-screens";
+export default function PlansPage() { return <ScreenBoundary kind="list"><PlansScreen /></ScreenBoundary>; }
