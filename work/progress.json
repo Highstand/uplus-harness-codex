@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "phase": 2,
+  "phase": 3,
   "status": "ready",
   "announced": false,
   "commitRequired": false,
@@ -13,6 +13,28 @@
         "errors": []
       },
       "approval": "승인"
+    },
+    "2": {
+      "status": "passed",
+      "fingerprint": "67c207f252d1661c7520795349d8f1d4d87f6789bc1e1df049489bc05ab1ea79",
+      "result": {
+        "ok": true,
+        "expected": [
+          "/plans",
+          "/plans/[planId]",
+          "/plans/[planId]/apply",
+          "/plans/[planId]/confirm",
+          "/subscriptions/complete"
+        ],
+        "actual": [
+          "/plans",
+          "/plans/[planId]",
+          "/plans/[planId]/apply",
+          "/plans/[planId]/confirm",
+          "/subscriptions/complete"
+        ],
+        "errors": []
+      }
     }
   },
   "rerun": [],
