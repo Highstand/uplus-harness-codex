@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "phase": 3,
+  "phase": 4,
   "status": "ready",
   "announced": false,
   "commitRequired": false,
@@ -33,6 +33,14 @@
           "/plans/[planId]/confirm",
           "/subscriptions/complete"
         ],
+        "errors": []
+      }
+    },
+    "3": {
+      "status": "passed",
+      "fingerprint": "9251e6aa175572153e59169c5f1920cca947d2bf3bf0d67be23365b09f9a643f",
+      "result": {
+        "ok": true,
         "errors": []
       }
     }

@@ -43,7 +43,18 @@ try {
   test('인라인 스타일 차단', () => assert.ok(sourceErrors('app/test.tsx', '<div style={{fontWeight: 500}} />', map).length));
   test('생성 CSS의 hex는 제외되고 원본 일치로 통과', () => assert.equal(checkTokens(root, { coverage: false }).ok, true));
   test('생성 CSS 변조는 실패', () => { write('app/tokens.css', generateCSS(root) + '/* tampered */'); assert.equal(checkTokens(root, { coverage: false }).ok, false); write('app/tokens.css', generateCSS(root)); });
-  test('줄높이·굵기 누락은 3단계 실패', () => { const result = checkTokens(root); assert.equal(result.ok, false); assert.ok(result.errors.some(e => e.includes('line-height'))); assert.ok(result.errors.some(e => e.includes('font-weight'))); });
+  test('줄높이·굵기 누락은 3단계 실패', () => {
+    const original = read(root, 'docs/tokens.json');
+    const fixture = JSON.parse(original);
+    fixture.tokens = fixture.tokens.filter(t => !/line-height|font-weight/.test(t.name));
+    write('docs/tokens.json', JSON.stringify(fixture));
+    try {
+      const result = checkTokens(root);
+      assert.equal(result.ok, false);
+      assert.ok(result.errors.some(e => e.includes('line-height')));
+      assert.ok(result.errors.some(e => e.includes('font-weight')));
+    } finally { write('docs/tokens.json', original); }
+  });
   test('R1 금지 문구 위반 실패; 문서 제외', () => { assert.equal(checkCopy(root).ok, true); write('lib/copy.ts', 'export const label = "할인가";'); assert.equal(checkCopy(root).ok, false); fs.unlinkSync(path.join(root, 'lib/copy.ts')); });
   test('안내 없이 진행 불가', () => { state(initialState()); assert.throws(() => transition(root, 'proceed', { userText: '진행해' })); });
   test('시작은 안내만 하고 실행하지 않음', () => { state(initialState()); const result = transition(root, 'start'); assert.equal(result.executed, false); assert.equal(result.status, 'ready'); assert.equal(result.phase, 1); });

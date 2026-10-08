@@ -1,1 +1,48 @@
 @import "tailwindcss";
+@import "./tokens.css";
+.type-heading-h1 { font-size: var(--typography-font-size-heading-h1); line-height: var(--typography-line-height-44); font-weight: var(--typography-font-weight-700); }
+.type-heading-h2 { font-size: var(--typography-font-size-heading-h2); line-height: var(--typography-line-height-40); font-weight: var(--typography-font-weight-700); }
+.type-heading-h3 { font-size: var(--typography-font-size-heading-h3); line-height: var(--typography-line-height-32); font-weight: var(--typography-font-weight-700); }
+.type-heading-h4 { font-size: var(--typography-font-size-heading-h4); line-height: var(--typography-line-height-28); font-weight: var(--typography-font-weight-500); }
+.type-subtitle-bold { font-size: var(--typography-font-size-subtitle); line-height: var(--typography-line-height-26); font-weight: var(--typography-font-weight-700); }
+.type-subtitle-default { font-size: var(--typography-font-size-subtitle); line-height: var(--typography-line-height-26); font-weight: var(--typography-font-weight-600); }
+.type-body-strong { font-size: var(--typography-font-size-body); line-height: var(--typography-line-height-24); font-weight: var(--typography-font-weight-600); }
+.type-body-medium { font-size: var(--typography-font-size-body); line-height: var(--typography-line-height-24); font-weight: var(--typography-font-weight-500); }
+.type-body-small-strong { font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); font-weight: var(--typography-font-weight-600); }
+.type-body-small-medium { font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); font-weight: var(--typography-font-weight-500); }
+.type-caption-bold { font-size: var(--typography-font-size-caption); line-height: var(--typography-line-height-18); font-weight: var(--typography-font-weight-700); }
+.type-caption-medium { font-size: var(--typography-font-size-caption); line-height: var(--typography-line-height-18); font-weight: var(--typography-font-weight-500); }
+.type-caption-small-bold { font-size: var(--typography-font-size-caption-small); line-height: var(--typography-line-height-16); font-weight: var(--typography-font-weight-700); }
+.type-caption-small { font-size: var(--typography-font-size-caption-small); line-height: var(--typography-line-height-16); font-weight: var(--typography-font-weight-500); }
+.type-caption-mini { font-size: var(--typography-font-size-caption-mini); line-height: var(--typography-line-height-14); font-weight: var(--typography-font-weight-600); }
+
+body { margin: 0; background-color: var(--semantic-bg-default); color: var(--semantic-text-primary); font-family: var(--typography-font-family-family-font); font-size: var(--typography-font-size-body); line-height: var(--typography-line-height-24); font-weight: var(--typography-font-weight-500); }
+.ui-shell { max-width: var(--dimension-size-390); margin: 0 auto; background-color: var(--semantic-bg-surface); }
+.ui-header { display: flex; align-items: center; justify-content: space-between; min-height: var(--dimension-size-56); padding-top: 0; padding-bottom: 0; padding-left: var(--spacing-spacing-16); padding-right: var(--spacing-spacing-16); background-color: var(--semantic-bg-surface); }
+.ui-header-title { font-size: var(--typography-font-size-heading-h4); line-height: var(--typography-line-height-28); font-weight: var(--typography-font-weight-500); margin: 0; }
+.ui-content { display: flex; flex-direction: column; gap: var(--spacing-spacing-24); padding: var(--spacing-spacing-24) var(--spacing-spacing-16); }
+.ui-button { display: inline-flex; align-items: center; justify-content: center; min-height: var(--dimension-size-48); padding-top: 0; padding-bottom: 0; padding-left: var(--spacing-spacing-20); padding-right: var(--spacing-spacing-20); border-style: none; border-radius: var(--radius-radius-12); background-color: var(--semantic-fill-primary); color: var(--semantic-text-on-dark); font-family: var(--typography-font-family-family-font); font-size: var(--typography-font-size-body); line-height: var(--typography-line-height-24); font-weight: var(--typography-font-weight-600); cursor: pointer; text-decoration: none; }
+.ui-button:hover { background-color: var(--semantic-fill-primary-hover); }
+.ui-button[data-variant="secondary"] { background-color: var(--semantic-fill-tertiary); color: var(--semantic-text-primary); }
+.ui-button[data-scale="sm"] { min-height: var(--dimension-size-40); }
+.ui-button[data-scale="xl"] { min-height: var(--dimension-size-52); }
+.ui-button:disabled { background-color: var(--semantic-fill-disabled); color: var(--semantic-text-on-disabled); cursor: default; }
+.ui-button:focus-visible, .ui-chip:focus-visible, .ui-input:focus-visible, .ui-checkbox:focus-visible { outline-style: auto; outline-color: var(--semantic-border-focus); }
+.ui-field { display: flex; flex-direction: column; gap: var(--spacing-spacing-8); }
+.ui-input { width: 100%; min-height: var(--dimension-size-58); padding: var(--spacing-spacing-16); border-style: none; border-radius: var(--radius-radius-12); background-color: var(--semantic-bg-subtle); color: var(--semantic-text-primary); font-family: var(--typography-font-family-family-font); font-size: var(--typography-font-size-body); line-height: var(--typography-line-height-24); font-weight: var(--typography-font-weight-500); }
+.ui-input::placeholder { color: var(--semantic-text-placeholder); }
+.ui-input[aria-invalid="true"] { background-color: var(--semantic-bg-error-subtle); }
+.ui-input:disabled { background-color: var(--semantic-fill-disabled); color: var(--semantic-text-on-disabled); }
+.ui-error { color: var(--semantic-text-error); font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); font-weight: var(--typography-font-weight-500); margin: 0; }
+.ui-checkbox-label { display: flex; align-items: center; gap: var(--spacing-spacing-12); }
+.ui-checkbox { width: var(--dimension-size-24); height: var(--dimension-size-24); accent-color: var(--semantic-fill-primary); }
+.ui-chip { min-height: var(--dimension-size-40); padding-top: 0; padding-bottom: 0; padding-left: var(--spacing-spacing-16); padding-right: var(--spacing-spacing-16); border-style: none; border-radius: var(--radius-radius-full); background-color: var(--semantic-bg-subtle); color: var(--semantic-text-secondary); font-family: var(--typography-font-family-family-font); font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); font-weight: var(--typography-font-weight-600); cursor: pointer; }
+.ui-chip[aria-pressed="true"] { background-color: var(--semantic-fill-secondary); color: var(--semantic-text-on-dark); }
+.ui-tag { display: inline-flex; align-items: center; min-height: var(--dimension-size-26); padding-top: 0; padding-bottom: 0; padding-left: var(--spacing-spacing-12); padding-right: var(--spacing-spacing-12); border-radius: var(--radius-radius-full); background-color: var(--semantic-bg-accent-subtle); color: var(--semantic-text-accent); font-size: var(--typography-font-size-caption-small); line-height: var(--typography-line-height-16); font-weight: var(--typography-font-weight-700); }
+.ui-row { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-spacing-16); min-height: var(--dimension-size-46); }
+.ui-row-label { color: var(--semantic-text-secondary); }
+.ui-card { display: flex; flex-direction: column; gap: var(--spacing-spacing-16); padding: var(--spacing-spacing-20); border-radius: var(--radius-radius-16); background-color: var(--semantic-bg-subtle); }
+.ui-card[data-selected="true"] { background-color: var(--semantic-bg-accent-subtle); }
+.ui-bottom-cta { position: sticky; bottom: 0; display: flex; flex-direction: column; gap: var(--spacing-spacing-12); padding: var(--spacing-spacing-16) var(--spacing-spacing-16) var(--spacing-spacing-32); min-height: var(--dimension-size-97); background-color: var(--semantic-bg-surface); }
+.ui-bottom-cta[data-layout="price"] { min-height: var(--dimension-size-139); }
+.ui-actions { display: flex; justify-content: space-between; gap: var(--spacing-spacing-8); }
