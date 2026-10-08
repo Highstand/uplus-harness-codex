@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "phase": 4,
+  "phase": 5,
   "status": "ready",
   "announced": false,
   "commitRequired": false,
@@ -43,10 +43,25 @@
         "ok": true,
         "errors": []
       }
+    },
+    "4": {
+      "status": "passed",
+      "fingerprint": "7b546677f370122a077d3f366297893f79fb904921bf6b7249cd202552dcbed8",
+      "result": {
+        "ok": true,
+        "build": {
+          "ok": true,
+          "output": "\n> uplus-harness-codex@0.1.0 build\n> next build --webpack\n\n▲ Next.js 16.4.0 (webpack)\n✓ Running next.config.ts took 11ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 955ms\n  Running TypeScript ...\n  Finished TypeScript in 587ms ...\n  Collecting page data using 8 workers ...\n  Generating static pages using 8 workers (0/4) ...\n  Generating static pages using 8 workers (1/4) \r\n  Generating static pages using 8 workers (2/4) \r\n  Generating static pages using 8 workers (3/4) \r\n✓ Generating static pages using 8 workers (4/4) in 280ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /_not-found\n├ ○ /plans\n├ ƒ /plans/[planId]\n├ ƒ /plans/[planId]/apply\n├ ƒ /plans/[planId]/confirm\n└ ○ /subscriptions/complete\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n"
+        },
+        "lint": {
+          "ok": true,
+          "output": "\n> uplus-harness-codex@0.1.0 lint\n> eslint\n\n"
+        },
+        "errors": []
+      }
     }
   },
   "rerun": [
-    4,
     5
   ],
   "message": "현재 페이즈 완료. 다음 페이즈는 안내 후 “진행해”를 기다리세요."

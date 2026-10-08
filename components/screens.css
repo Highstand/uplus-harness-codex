@@ -7,9 +7,9 @@
 .plan-screen h2, .plan-screen h3, .plan-screen p { margin: 0; }
 .screen-title { font-size: var(--typography-font-size-heading-h3); line-height: var(--typography-line-height-32); font-weight: var(--typography-font-weight-700); }
 .section-title { font-size: var(--typography-font-size-subtitle); line-height: var(--typography-line-height-26); font-weight: var(--typography-font-weight-700); }
-.plan-name { font-size: var(--typography-font-size-heading-h4); line-height: var(--typography-line-height-28); font-weight: var(--typography-font-weight-700); }
+.plan-name { font-size: var(--typography-font-size-heading-h4); line-height: var(--typography-line-height-28); font-weight: var(--typography-font-weight-500); }
 .muted { color: var(--semantic-text-secondary); font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); font-weight: var(--typography-font-weight-500); }
-.caption { color: var(--semantic-text-tertiary); font-size: var(--typography-font-size-caption-small); line-height: var(--typography-line-height-18); font-weight: var(--typography-font-weight-500); }
+.caption { color: var(--semantic-text-tertiary); font-size: var(--typography-font-size-caption); line-height: var(--typography-line-height-18); font-weight: var(--typography-font-weight-500); }
 .flow-stack { display: flex; flex-direction: column; gap: var(--spacing-spacing-16); }
 .flow-close { display: flex; flex-direction: column; gap: var(--spacing-spacing-8); }
 .filter-list { display: flex; flex-wrap: wrap; gap: var(--spacing-spacing-8); }
@@ -18,7 +18,7 @@
 .plan-link:hover { background-color: var(--semantic-bg-accent-subtle); }
 .plan-link:focus-visible { outline-style: auto; outline-color: var(--semantic-border-focus); }
 .tag-line { display: flex; flex-wrap: wrap; gap: var(--spacing-spacing-8); align-items: center; }
-.plan-type { border-radius: var(--radius-radius-full); background-color: var(--semantic-bg-surface); padding: var(--spacing-spacing-4) var(--spacing-spacing-8); font-size: var(--typography-font-size-caption-small); line-height: var(--typography-line-height-18); font-weight: var(--typography-font-weight-600); }
+.plan-type { border-radius: var(--radius-radius-full); background-color: var(--semantic-bg-surface); padding: var(--spacing-spacing-4) var(--spacing-spacing-8); font-size: var(--typography-font-size-caption-small); line-height: var(--typography-line-height-16); font-weight: var(--typography-font-weight-700); }
 .plan-facts { display: flex; flex-direction: column; gap: var(--spacing-spacing-4); }
 .plan-fact { display: flex; justify-content: space-between; gap: var(--spacing-spacing-8); font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); }
 .price { color: var(--semantic-text-accent); font-size: var(--typography-font-size-heading-h2); line-height: var(--typography-line-height-40); font-weight: var(--typography-font-weight-700); }
@@ -39,3 +39,7 @@
 .toast { position: absolute; bottom: var(--spacing-spacing-80); left: var(--spacing-spacing-16); right: var(--spacing-spacing-16); padding: var(--spacing-spacing-16); border-radius: var(--radius-radius-12); background-color: var(--semantic-bg-inverse); color: var(--semantic-text-on-dark); font-size: var(--typography-font-size-body-small); line-height: var(--typography-line-height-21); text-align: center; }
 .empty-state { display: flex; flex-direction: column; gap: var(--spacing-spacing-24); padding-top: var(--spacing-spacing-40); padding-bottom: var(--spacing-spacing-40); text-align: center; }
 .skeleton { min-height: var(--dimension-size-223); border-radius: var(--radius-radius-16); background-color: var(--semantic-bg-subtle); }
+/* Complete the Design.md body/small-medium style instead of depending on
+   ancestor weight. Glyphs use complete heading/h3 and heading/h1 styles. */
+.plan-fact, .price-label, .notice, .toast { font-weight: var(--typography-font-weight-500); }
+.back-link, .done-mark { font-weight: var(--typography-font-weight-700); }
