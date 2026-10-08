@@ -26,6 +26,12 @@ export const validApplication = (input: ApplicationInput) => validName(input.nam
 export const applicationSaved = (id: string) => update({ receiptId: id, completed: true, openingReceipt: true });
 export function displayPhone(phone: string) { return phone.length === 11 ? `${phone.slice(0, 3)}-${phone.slice(3, 7)}-${phone.slice(7)}` : phone; }
 export function maskedPhone(phone: string) { return `${phone.slice(0, 3)}-****-${phone.slice(7)}`; }
+export function maskedName(name: string) {
+  const letters = Array.from(name);
+  if (letters.length <= 1) return "*";
+  if (letters.length === 2) return `${letters[0]}*`;
+  return `${letters[0]}${"*".repeat(letters.length - 2)}${letters[letters.length - 1]}`;
+}
 export function displayDate(value: string) {
   const date = new Date(value);
   const pad = (n: number) => String(n).padStart(2, "0");

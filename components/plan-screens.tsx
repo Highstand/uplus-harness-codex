@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Component, Suspense, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { BottomCTA, Button, Card, Checkbox, Content, FilterChip, Header, Input, ListRow, ScreenShell, Tag } from "./ui";
 import { dataAmount, dataNotice, findPlan, money, plans, typeLabels, type Plan, type PlanFilter } from "@/lib/plans";
-import { applicationSaved, beginApplication, chooseFilter, clearReceipt, displayDate, displayPhone, maskedPhone, receiptOpened, useDemoSession, validApplication, validName, validPhone } from "@/lib/demo";
+import { applicationSaved, beginApplication, chooseFilter, clearReceipt, displayDate, displayPhone, maskedName, maskedPhone, receiptOpened, useDemoSession, validApplication, validName, validPhone } from "@/lib/demo";
 import { insertSubscription, readSubscription, type Subscription } from "@/lib/subscriptions";
 import "./screens.css";
 
@@ -226,7 +226,7 @@ function SavedReceipt({ id, onHome }: { id: string; onHome: () => void }) {
   return <Frame title="신청 완료" footer={<BottomCTA><Button scale="xl" onClick={onHome}>처음으로</Button></BottomCTA>}>
     <div className="completion-heading"><span className="done-mark" aria-hidden="true">✓</span><h2 className="screen-title">실습 신청이<br />저장됐어요</h2><p className="muted">실습 DB에 저장된 내용입니다. 실제 통신사에는 접수되지 않았어요.</p></div>
     <Card><p className="muted">신청 번호</p><div className="copy-line"><strong className="section-title">{receipt.application_no}</strong><Button scale="sm" variant="secondary" onClick={copy}>복사</Button></div></Card>
-    <section className="flow-close"><h2 className="section-title">저장된 신청 내용</h2><PlanSummary plan={plan} compact /><div><ListRow label="이름">{receipt.name}</ListRow><ListRow label="휴대폰 번호">{maskedPhone(receipt.phone)}</ListRow><ListRow label="신청 일시">{displayDate(receipt.created_at)}</ListRow><ListRow label="상태"><Tag>{statusLabels[receipt.status]}</Tag></ListRow></div></section>
+    <section className="flow-close"><h2 className="section-title">저장된 신청 내용</h2><PlanSummary plan={plan} compact /><div><ListRow label="이름">{maskedName(receipt.name)}</ListRow><ListRow label="휴대폰 번호">{maskedPhone(receipt.phone)}</ListRow><ListRow label="신청 일시">{displayDate(receipt.created_at)}</ListRow><ListRow label="상태"><Tag>{statusLabels[receipt.status]}</Tag></ListRow></div></section>
     <p className="notice">이 화면을 닫거나 새로고침하면 여기서 신청 내용을 다시 조회할 수 없어요. 실습 DB의 기록은 유지됩니다.</p>
     {toast && <div className="toast" role="status">{toast}</div>}
   </Frame>;
