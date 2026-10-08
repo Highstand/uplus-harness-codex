@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Component, Suspense, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { BottomCTA, Button, Card, Checkbox, Content, FilterChip, Header, Input, ListRow, ScreenShell, Tag } from "./ui";
 import { dataAmount, dataNotice, findPlan, money, plans, typeLabels, type Plan, type PlanFilter } from "@/lib/plans";
-import { beginApplication, chooseFilter, clearReceipt, completeDemo, displayDate, displayPhone, maskedPhone, useDemoSession, validApplication, validName, validPhone } from "@/lib/demo";
+import { beginApplication, chooseFilter, clearReceipt, completeDemo, displayDate, displayPhone, maskedPhone, receiptOpened, useDemoSession, validApplication, validName, validPhone } from "@/lib/demo";
 import "./screens.css";
 
 type ScreenKind = "list" | "detail" | "confirm" | "apply" | "complete";
@@ -58,8 +58,13 @@ function MissingPlan({ title, message }: { title: string; message: string }) {
 
 export function PlansScreen() {
   const session = useDemoSession();
-  useEffect(() => { clearReceipt(); }, []);
+  const router = useRouter();
+  useEffect(() => {
+    if (session.openingReceipt) router.push("/subscriptions/complete");
+    else clearReceipt();
+  }, [session.openingReceipt, router]);
   const visible = plans.filter((plan) => session.filter === "all" || plan.type === session.filter);
+  if (session.openingReceipt) return <Frame title="신청 완료"><p className="muted" role="status">시연 결과를 준비하고 있어요.</p></Frame>;
   return <Frame title="요금제 찾기">
     <div className="flow-close"><h2 className="screen-title">나에게 맞는<br />요금제 찾기</h2><p className="muted">무제한 유형과 매달 내는 돈을 비교해 보세요.</p></div>
     <div className="filter-list" role="group" aria-label="무제한 유형 필터">{(Object.keys(typeLabels) as PlanFilter[]).map((filter) => <FilterChip key={filter} selected={session.filter === filter} onClick={() => chooseFilter(filter)}>{session.filter === filter && <span aria-hidden="true">✓ </span>}{typeLabels[filter]}</FilterChip>)}</div>
@@ -139,9 +144,9 @@ function ApplicationForm({ plan }: { plan: Plan }) {
     try {
       completeDemo(input);
       clearForm();
-      // Back from completion lands on this safe replacement, never the form.
-      window.history.replaceState(null, "", "/plans");
-      router.push("/subscriptions/complete");
+      // Commit a real list route to history before the list opens completion.
+      // This also gives direct-entry forms a safe Back destination.
+      router.replace("/plans");
     } catch {
       submitted.current = false;
       setSubmitting(false);
@@ -167,12 +172,18 @@ export function CompleteScreen() {
   const { receipt } = useDemoSession();
   const [toast, setToast] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => { receiptOpened(); }, []);
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   function home() { clearReceipt(); router.replace("/plans"); }
   useEffect(() => {
-    function back() { clearReceipt(); router.replace("/plans"); }
-    window.addEventListener("popstate", back);
-    return () => window.removeEventListener("popstate", back);
+    function back() {
+      clearReceipt();
+      // Next restores the history entry in its own popstate listener first.
+      // Navigate after that restore so its cached page cannot win this race.
+      setTimeout(() => router.replace("/plans"), 0);
+    }
+    window.addEventListener("popstate", back, { capture: true });
+    return () => window.removeEventListener("popstate", back, { capture: true });
   }, [router]);
   async function copy() {
     if (!receipt) return;
