@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "phase": 5,
-  "status": "ready",
+  "phase": 6,
+  "status": "complete",
   "announced": false,
   "commitRequired": false,
   "gates": {
@@ -59,10 +59,17 @@
         },
         "errors": []
       }
+    },
+    "5": {
+      "status": "passed",
+      "fingerprint": "1b4f1837a6a600645fb5b860db8f61da50a4e76dff8d33d96736146668062bac",
+      "result": {
+        "ok": true,
+        "errors": []
+      },
+      "approval": "승인"
     }
   },
-  "rerun": [
-    5
-  ],
+  "rerun": [],
   "message": "현재 페이즈 완료. 다음 페이즈는 안내 후 “진행해”를 기다리세요."
 }
