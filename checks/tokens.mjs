@@ -1,4 +1,4 @@
-import { ROOT, read, sources, report, isMain } from './common.mjs';
+import { ROOT, read, sources, report, isMain, hash } from './common.mjs';
 
 export function tokenName(t) { return '--' + `${t.collection}/${t.name}`.replace(/[^a-zA-Z0-9-]/g, '-'); }
 export function tokenKind(t) {
@@ -85,6 +85,12 @@ const structural = new Set(('block inline inline-block flex inline-flex grid hid
 function stripComments(s) { return s.replace(/\/\*[\s\S]*?\*\//g, ''); }
 
 export function sourceErrors(file, source, map, knownClasses = new Set()) {
+  // Original Figma asset from Input 1:754. Its authored SVG colors and geometry
+  // must stay intact; this exception never permits hand-written styles or edits.
+  if (file === 'components/ui/input-error.svg') {
+    return hash(source) === '31b87370274eb0feeefd22a1e4ad825b023e58dd90e2d5f1bd343797ddc99fd5'
+      ? [] : [`${file}: Figma 원본 자산과 다릅니다. 원본 SVG를 변경할 수 없습니다.`];
+  }
   const errors = [];
   const add = message => errors.push(`${file}: ${message}`);
   const s = stripComments(source);

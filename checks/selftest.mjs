@@ -23,6 +23,12 @@ try {
   write('app/tokens.css', generateCSS(root));
   write('app/globals.css', '.demo { color: var(--semantic-text-primary); padding: var(--spacing-spacing-16); width: 100%; margin: 0 auto; }\n');
   const map = loadTokens(root);
+  test('Figma 원본 아이콘만 허용하고 변조는 차단', () => {
+    const asset = read(ROOT, 'components/ui/input-error.svg');
+    assert.deepEqual(sourceErrors('components/ui/input-error.svg', asset, map), []);
+    assert.ok(sourceErrors('components/ui/input-error.svg', asset + '<!-- changed -->', map).length);
+    assert.ok(sourceErrors('components/ui/other.svg', asset, map).length);
+  });
   test('화면 5개와 주소 5개 일치', () => assert.equal(checkRoutes(root).ok, true));
   test('주소가 다른 5개도 실패', () => {
     fs.renameSync(path.join(root, 'app/plans/[planId]/confirm'), path.join(root, 'app/plans/[planId]/wrong'));

@@ -117,7 +117,7 @@ export function transition(root, command, { userText = '', phase, reason = '' } 
     const allowed = {
       1: ['work/01-requirements.md'],
       2: ['work/02-pages.md', ':(glob)app/**/page.tsx', 'app/page.tsx'],
-      3: ['docs/tokens.json', 'app/tokens.css', 'app/globals.css', 'app/layout.tsx', 'components/ui', 'scripts/generate-tokens.mjs', 'checks/phase.mjs', 'checks/selftest.mjs'],
+      3: ['docs/tokens.json', 'app/tokens.css', 'app/globals.css', 'app/layout.tsx', 'components/ui', 'scripts/generate-tokens.mjs', 'checks/phase.mjs', 'checks/tokens.mjs', 'checks/selftest.mjs'],
       4: ['app', 'components', 'lib'],
       5: ['work/05-review.md'],
     }[p];

@@ -1,5 +1,7 @@
 /* Generated from docs/tokens.json. Do not edit. */
 :root {
+  --dimension-size-input-border: 1.5px;
+  --spacing-spacing-2: 2px;
   --typography-font-size-caption-small: 12px;
   --typography-line-height-14: 14px;
   --typography-line-height-16: 16px;

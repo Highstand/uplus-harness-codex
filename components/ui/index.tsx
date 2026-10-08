@@ -1,4 +1,6 @@
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import Image from "next/image";
+import inputErrorIcon from "./input-error.svg";
 
 type Children = { children: ReactNode };
 
@@ -29,12 +31,14 @@ type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "sty
   error?: string;
 };
 
-export function Input({ id, label, error, "aria-describedby": describedBy, ...props }: InputProps) {
+export function Input({ id, label, error, disabled, placeholder = label, "aria-describedby": describedBy, ...props }: InputProps) {
   const errorId = `${id}-error`;
+  const showError = Boolean(error) && !disabled;
   return <div className="ui-field">
-    <label htmlFor={id}>{label}</label>
-    <input {...props} id={id} className="ui-input" aria-invalid={Boolean(error)} aria-describedby={error ? [describedBy, errorId].filter(Boolean).join(" ") : describedBy} />
-    {error && <p id={errorId} className="ui-error" role="alert">{error}</p>}
+    <div className="ui-input-field" data-invalid={showError}>
+      <input {...props} id={id} disabled={disabled} placeholder={placeholder} aria-label={label} className="ui-input" aria-invalid={showError} aria-describedby={showError ? [describedBy, errorId].filter(Boolean).join(" ") : describedBy} />
+    </div>
+    {showError && <div id={errorId} className="ui-input-message" role="alert"><Image src={inputErrorIcon} alt="" unoptimized className="ui-input-error-icon" /><p className="ui-input-error">{error}</p></div>}
   </div>;
 }
 

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "phase": 5,
+  "phase": 4,
   "status": "ready",
   "announced": false,
   "commitRequired": false,
@@ -38,29 +38,16 @@
     },
     "3": {
       "status": "passed",
-      "fingerprint": "9251e6aa175572153e59169c5f1920cca947d2bf3bf0d67be23365b09f9a643f",
+      "fingerprint": "bc70b0cfcdb1a2b4c8dfca8f45d356708888fc6147b322e1047b9bd6e0564921",
       "result": {
         "ok": true,
-        "errors": []
-      }
-    },
-    "4": {
-      "status": "passed",
-      "fingerprint": "ecef25823f599e958c1d82972c7eddb4beb2b50726a781959f53a9f7de1e91db",
-      "result": {
-        "ok": true,
-        "build": {
-          "ok": true,
-          "output": "\n> uplus-harness-codex@0.1.0 build\n> next build --webpack\n\n▲ Next.js 16.4.0 (webpack)\n✓ Running next.config.ts took 67ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1119ms\n  Running TypeScript ...\n  Finished TypeScript in 724ms ...\n  Collecting page data using 8 workers ...\n  Generating static pages using 8 workers (0/4) ...\n  Generating static pages using 8 workers (1/4) \r\n  Generating static pages using 8 workers (2/4) \r\n  Generating static pages using 8 workers (3/4) \r\n✓ Generating static pages using 8 workers (4/4) in 264ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /_not-found\n├ ○ /plans\n├ ƒ /plans/[planId]\n├ ƒ /plans/[planId]/apply\n├ ƒ /plans/[planId]/confirm\n└ ○ /subscriptions/complete\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n"
-        },
-        "lint": {
-          "ok": true,
-          "output": "\n> uplus-harness-codex@0.1.0 lint\n> eslint\n\n"
-        },
         "errors": []
       }
     }
   },
-  "rerun": [],
+  "rerun": [
+    4,
+    5
+  ],
   "message": "현재 페이즈 완료. 다음 페이즈는 안내 후 “진행해”를 기다리세요."
 }
