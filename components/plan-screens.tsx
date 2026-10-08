@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { Component, Suspense, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { BottomCTA, Button, Card, Checkbox, Content, FilterChip, Header, Input, ListRow, ScreenShell, Tag } from "./ui";
 import { dataAmount, dataNotice, findPlan, money, plans, typeLabels, type Plan, type PlanFilter } from "@/lib/plans";
-import { beginApplication, chooseFilter, clearReceipt, completeDemo, displayDate, displayPhone, maskedPhone, receiptOpened, useDemoSession, validApplication, validName, validPhone } from "@/lib/demo";
+import { applicationSaved, beginApplication, chooseFilter, clearReceipt, displayDate, displayPhone, maskedPhone, receiptOpened, useDemoSession, validApplication, validName, validPhone } from "@/lib/demo";
+import { insertSubscription, readSubscription, type Subscription } from "@/lib/subscriptions";
 import "./screens.css";
 
 type ScreenKind = "list" | "detail" | "confirm" | "apply" | "complete";
@@ -110,8 +111,8 @@ export function ApplyScreen({ planId }: { planId: string }) {
   const plan = findPlan(planId);
   const router = useRouter();
   const session = useDemoSession();
-  useEffect(() => { if (session.completed && !session.receipt) router.replace("/plans"); }, [session.completed, session.receipt, router]);
-  if (session.completed && !session.receipt) return <Frame title="변경 신청"><p className="muted" role="status">요금제 목록으로 이동하고 있어요.</p></Frame>;
+  useEffect(() => { if (session.completed && !session.receiptId) router.replace("/plans"); }, [session.completed, session.receiptId, router]);
+  if (session.completed && !session.receiptId) return <Frame title="변경 신청"><p className="muted" role="status">요금제 목록으로 이동하고 있어요.</p></Frame>;
   if (!plan) return <MissingPlan title="변경 신청" message="선택한 요금제 정보가 없어요." />;
   return <ApplicationForm plan={plan} />;
 }
@@ -126,54 +127,59 @@ function ApplicationForm({ plan }: { plan: Plan }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const submitted = useRef(false);
+  const attemptId = useRef<string | null>(null);
+  const active = useRef(true);
   const sheet = useRef<HTMLDialogElement>(null);
   const input = { name, phone, plan_id: plan.id, privacy_agreed: agreed };
   const valid = validApplication(input);
   useEffect(() => {
+    active.current = true;
     const discard = () => { setName(""); setPhone(""); setAgreed(false); };
     window.addEventListener("popstate", discard);
-    return () => window.removeEventListener("popstate", discard);
+    return () => { active.current = false; window.removeEventListener("popstate", discard); };
   }, []);
   function clearForm() { setName(""); setPhone(""); setAgreed(false); }
   function cancel() { clearForm(); clearReceipt(); router.replace(`/plans/${plan.id}`); }
-  function submit(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
     if (!valid || submitted.current) return;
     submitted.current = true;
     setSubmitting(true);
+    setSubmitError("");
     try {
-      completeDemo(input);
+      attemptId.current ??= crypto.randomUUID();
+      await insertSubscription(attemptId.current, input);
+      if (!active.current) return;
+      applicationSaved(attemptId.current);
       clearForm();
       // Commit a real list route to history before the list opens completion.
       // This also gives direct-entry forms a safe Back destination.
       router.replace("/plans");
     } catch {
+      if (!active.current) return;
       submitted.current = false;
       setSubmitting(false);
-      setSubmitError("시연을 완료하지 못했어요. 입력 내용을 확인하고 다시 시도해 주세요.");
+      setSubmitError("신청을 완료하지 못했어요. 잠시 후 다시 시도해 주세요. 이미 저장된 신청이 있으면 그 내용을 확인합니다.");
     }
   }
-  return <Frame title="변경 신청" trailing={<Button variant="secondary" scale="sm" onClick={cancel} disabled={submitting}>취소</Button>} footer={<BottomCTA><Button type="submit" form="application" scale="xl" disabled={!valid || submitting} aria-busy={submitting}>{submitting ? "시연을 완료하는 중…" : "신청 완료하기"}</Button></BottomCTA>}>
-    <div className="flow-close"><h2 className="screen-title">간단한 정보만<br />입력하면 돼요</h2><p className="muted">실제 접수 없이 신청 과정을 체험합니다.</p></div>
+  return <Frame title="변경 신청" trailing={<Button variant="secondary" scale="sm" onClick={cancel} disabled={submitting}>취소</Button>} footer={<BottomCTA><Button type="submit" form="application" scale="xl" disabled={!valid || submitting} aria-busy={submitting}>{submitting ? "신청을 저장하는 중…" : "신청 완료하기"}</Button></BottomCTA>}>
+    <div className="flow-close"><h2 className="screen-title">간단한 정보만<br />입력하면 돼요</h2><p className="muted">실습용 가상 이름과 번호를 입력해 주세요. 신청은 실습 DB에 저장되며 통신사에 접수되지 않습니다.</p></div>
     <PlanSummary plan={plan} compact />
     <form id="application" className="flow-stack" onSubmit={submit} noValidate>
       <Input id="applicant-name" label="이름" placeholder="이름" value={name} autoComplete="off" disabled={submitting} error={nameError} onChange={(event) => { const letters = Array.from(event.target.value); setName(letters.slice(0, 20).join("")); setNameError(letters.length > 20 ? "이름은 20자까지 입력할 수 있어요." : ""); }} onBlur={() => { if (!validName(name)) setNameError("이름을 입력해 주세요."); }} />
       <Input id="applicant-phone" label="휴대폰 번호" placeholder="010-0000-0000" value={displayPhone(phone)} inputMode="numeric" type="tel" autoComplete="off" disabled={submitting} error={phoneTouched && !validPhone(phone) ? "휴대폰 번호 11자리를 정확히 입력해 주세요." : undefined} onChange={(event) => setPhone(event.target.value.replace(/\D/g, "").slice(0, 11))} onBlur={() => setPhoneTouched(true)} />
       <div className="agreement"><Checkbox checked={agreed} onChange={(event) => setAgreed(event.target.checked)} disabled={submitting} label="[필수] 개인정보 수집·이용에 동의합니다" /><Button scale="sm" variant="secondary" onClick={() => sheet.current?.showModal()}>보기</Button></div>
-      <p className="caption">실습 화면이며 입력한 개인정보는 저장하지 않습니다.</p>
+      <p className="caption">입력한 이름과 번호는 실습 DB에 저장됩니다. 가상 정보만 사용해 주세요.</p>
       {submitError && <p className="ui-error" role="alert">{submitError}</p>}
     </form>
-    <dialog ref={sheet} className="privacy-sheet" aria-labelledby="privacy-title"><div className="flow-stack"><h2 id="privacy-title" className="section-title">개인정보 수집·이용 안내</h2><p className="muted">수집 항목: 이름, 휴대폰 번호</p><p className="muted">이용 목적: 요금제 변경 신청 과정 체험</p><p className="notice">실습 화면이며 입력한 개인정보는 저장하지 않습니다.</p><p className="muted">실제 신청 기능을 연결할 때 개인정보 보관 기간을 안내합니다.</p><Button onClick={() => sheet.current?.close()}>닫기</Button></div></dialog>
+    <dialog ref={sheet} className="privacy-sheet" aria-labelledby="privacy-title"><div className="flow-stack"><h2 id="privacy-title" className="section-title">개인정보 수집·이용 안내</h2><p className="muted">수집 항목: 이름, 휴대폰 번호</p><p className="muted">이용 목적: 요금제 변경 신청 저장·조회 실습</p><p className="notice">입력한 이름과 번호는 실습 DB에 저장됩니다. 가상 정보만 사용해 주세요.</p><p className="muted">보관 기간: 실습 종료 후 삭제 예정입니다. 자동 삭제 기능은 없으며 담당자가 직접 삭제합니다.</p><Button onClick={() => sheet.current?.close()}>닫기</Button></div></dialog>
   </Frame>;
 }
 
 export function CompleteScreen() {
   const router = useRouter();
-  const { receipt } = useDemoSession();
-  const [toast, setToast] = useState("");
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { receiptId } = useDemoSession();
   useEffect(() => { receiptOpened(); }, []);
-  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   function home() { clearReceipt(); router.replace("/plans"); }
   useEffect(() => {
     function back() {
@@ -185,21 +191,43 @@ export function CompleteScreen() {
     window.addEventListener("popstate", back, { capture: true });
     return () => window.removeEventListener("popstate", back, { capture: true });
   }, [router]);
+  if (!receiptId) return <Frame title="신청 완료"><div className="empty-state"><h2 className="section-title">확인할 신청 정보가 없어요.</h2><Button onClick={home}>처음으로</Button></div></Frame>;
+  return <SavedReceipt key={receiptId} id={receiptId} onHome={home} />;
+}
+
+function SavedReceipt({ id, onHome }: { id: string; onHome: () => void }) {
+  const [receipt, setReceipt] = useState<Subscription | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [retry, setRetry] = useState(0);
+  const [toast, setToast] = useState("");
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    readSubscription(id, controller.signal).then((row) => {
+      if (!controller.signal.aborted) setReceipt(row);
+    }).catch(() => {
+      if (!controller.signal.aborted) setFailed(true);
+    });
+    return () => controller.abort();
+  }, [id, retry]);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   async function copy() {
     if (!receipt) return;
     try { await navigator.clipboard.writeText(receipt.application_no); setToast("신청 번호를 복사했어요."); }
-    catch { setToast("복사하지 못했어요. 시연 번호를 직접 선택해 복사해 주세요."); }
+    catch { setToast("복사하지 못했어요. 신청 번호를 직접 선택해 복사해 주세요."); }
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setToast(""), 2000);
   }
-  if (!receipt) return <Frame title="신청 완료"><div className="empty-state"><h2 className="section-title">확인할 신청 정보가 없어요.</h2><Button onClick={home}>처음으로</Button></div></Frame>;
+  if (failed) return <Frame title="신청 완료"><div className="empty-state"><p role="alert">신청은 저장됐지만 내용을 불러오지 못했어요. 다시 확인해 주세요.</p><Button onClick={() => { setFailed(false); setRetry((value) => value + 1); }}>완료 정보 다시 확인</Button><Button variant="secondary" onClick={onHome}>처음으로</Button></div></Frame>;
+  if (!receipt) return <Frame title="신청 완료"><p className="muted" role="status">저장된 신청 내용을 확인하고 있어요.</p><div className="skeleton" aria-hidden="true" /></Frame>;
   const plan = findPlan(receipt.plan_id);
-  if (!plan) return <Frame title="신청 완료"><div className="empty-state"><p role="alert">시연 내용을 표시하지 못했어요. 처음 화면으로 이동해 주세요.</p><Button onClick={home}>처음으로</Button></div></Frame>;
-  return <Frame title="신청 완료" footer={<BottomCTA><Button scale="xl" onClick={home}>처음으로</Button></BottomCTA>}>
-    <div className="completion-heading"><span className="done-mark" aria-hidden="true">✓</span><h2 className="screen-title">요금제 변경 신청을<br />체험했어요</h2><p className="muted">실제 통신사에 접수되지 않은 시연입니다.</p></div>
-    <Card><p className="muted">시연 번호</p><div className="copy-line"><strong className="section-title">{receipt.application_no}</strong><Button scale="sm" variant="secondary" onClick={copy}>복사</Button></div></Card>
-    <section className="flow-close"><h2 className="section-title">신청 시연 내용</h2><PlanSummary plan={plan} compact /><div><ListRow label="이름">{receipt.name}</ListRow><ListRow label="휴대폰 번호">{maskedPhone(receipt.phone)}</ListRow><ListRow label="시연 일시">{displayDate(receipt.created_at)}</ListRow><ListRow label="상태"><Tag>시연 완료</Tag></ListRow></div></section>
-    <p className="notice">이 화면을 닫거나 새로고침하면 시연 내용을 다시 조회할 수 없어요. 필요한 경우 시연 번호를 복사해 두세요.</p>
+  if (!plan) return <Frame title="신청 완료"><div className="empty-state"><p role="alert">신청 내용을 표시하지 못했어요. 처음 화면으로 이동해 주세요.</p><Button onClick={onHome}>처음으로</Button></div></Frame>;
+  const statusLabels = { received: "접수 완료(실습)", processing: "처리 중(실습)", completed: "완료(실습)", canceled: "취소(실습)" };
+  return <Frame title="신청 완료" footer={<BottomCTA><Button scale="xl" onClick={onHome}>처음으로</Button></BottomCTA>}>
+    <div className="completion-heading"><span className="done-mark" aria-hidden="true">✓</span><h2 className="screen-title">실습 신청이<br />저장됐어요</h2><p className="muted">실습 DB에 저장된 내용입니다. 실제 통신사에는 접수되지 않았어요.</p></div>
+    <Card><p className="muted">신청 번호</p><div className="copy-line"><strong className="section-title">{receipt.application_no}</strong><Button scale="sm" variant="secondary" onClick={copy}>복사</Button></div></Card>
+    <section className="flow-close"><h2 className="section-title">저장된 신청 내용</h2><PlanSummary plan={plan} compact /><div><ListRow label="이름">{receipt.name}</ListRow><ListRow label="휴대폰 번호">{maskedPhone(receipt.phone)}</ListRow><ListRow label="신청 일시">{displayDate(receipt.created_at)}</ListRow><ListRow label="상태"><Tag>{statusLabels[receipt.status]}</Tag></ListRow></div></section>
+    <p className="notice">이 화면을 닫거나 새로고침하면 여기서 신청 내용을 다시 조회할 수 없어요. 실습 DB의 기록은 유지됩니다.</p>
     {toast && <div className="toast" role="status">{toast}</div>}
   </Frame>;
 }
