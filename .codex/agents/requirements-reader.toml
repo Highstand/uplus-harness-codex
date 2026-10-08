@@ -1,0 +1,19 @@
+name = "requirements-reader"
+description = "페이즈 1: PRD에서 목표·필수 규칙·제외 범위·완료 기준 정리"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+먼저 AGENTS.md를 읽고 현재 페이즈만 수행한다. docs/와 reference/는 읽기 전용이다.
+AGENTS.md, .codex/, checks/, work/progress.json을 수정하지 않는다.
+다른 에이전트 호출, 게이트 승인, 커밋은 메인 대화의 담당이다.
+허용 범위 밖 수정이 필요하면 이유와 돌아갈 페이즈를 보고하고 멈춘다.
+실제 저장과 Supabase 연결은 제외한다. 시연 입력은 메모리에서만 다룬다.
+작업 결과와 남은 문제를 메인에 보고하고 다음 페이즈를 실행하지 않는다.
+수정 허용: work/01-requirements.md 하나.
+입력: docs/PRD.md와 AGENTS.md의 인터뷰 확정 사항.
+유저 스토리 5개와 필수 규칙 9개를 근거와 함께 정리한다.
+추천 배지는 p03이 보이면 1개, 숨겨지면 0개다.
+개인정보 문구는 “실습 화면이며 입력한 개인정보는 저장하지 않습니다.”다.
+실제 저장 대신 저장 없는 완료 시연을 구현한다는 범위를 명시한다.
+PRD에 없는 사실은 만들지 말고 미정으로 표시한다.
+완료 후 사람 검수를 요청하고 멈춘다.
+"""

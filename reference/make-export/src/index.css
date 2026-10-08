@@ -1,0 +1,186 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import 'tailwindcss';
+
+:root {
+  --gray\/950: #000;
+  --gray\/900: #181A1B;
+  --gray\/800: #2D2D2D;
+  --gray\/600: #66707A;
+  --gray\/500: #878787;
+  --gray\/400: #B7BDC4;
+  --gray\/300: #D9DCDF;
+  --gray\/200: #EFF1F3;
+  --gray\/100: #F7F7F7;
+  --gray\/0: #FFF;
+  --pink\/500: #FF2E98;
+  --pink\/600: #E6007E;
+  --pink\/50: #FFF5FA;
+  --pink\/25: #FFF8F5;
+  --red\/500: #E30036;
+  --red\/50: #FFF0F3;
+  --black\/10: #0000001A;
+  --brand\/gray: #6B6B6B;
+  --brand\/red: #A50034;
+  --text\/primary: var(--gray\/900);
+  --text\/secondary: var(--gray\/600);
+  --text\/tertiary: var(--gray\/500);
+  --text\/on-dark: var(--gray\/0);
+  --text\/accent: var(--pink\/500);
+  --text\/error: var(--red\/500);
+  --text\/placeholder: var(--gray\/400);
+  --text\/on-disabled: var(--gray\/600);
+  --bg\/surface: var(--gray\/0);
+  --bg\/default: var(--gray\/100);
+  --bg\/subtle: var(--gray\/200);
+  --bg\/inverse: var(--gray\/800);
+  --bg\/accent-subtle: var(--pink\/50);
+  --bg\/error-subtle: var(--red\/50);
+  --border\/default: var(--gray\/300);
+  --border\/subtle: var(--gray\/200);
+  --border\/strong: var(--gray\/900);
+  --border\/divider: var(--black\/10);
+  --border\/focus: var(--pink\/500);
+  --border\/error: var(--red\/500);
+  --fill\/primary: var(--pink\/500);
+  --fill\/secondary: var(--gray\/900);
+  --fill\/tertiary: var(--gray\/200);
+  --fill\/disabled: var(--gray\/300);
+  --fill\/disabled-strong: var(--gray\/400);
+  --fill\/primary-hover: var(--pink\/600);
+  --icon\/default: var(--gray\/600);
+  --icon\/strong: var(--gray\/900);
+  --border\/medium: var(--gray\/600);
+  --surface\/default: var(--gray\/0);
+  --icon\/accent: var(--pink\/500);
+  --icon\/on-dark: var(--gray\/0);
+  --icon\/disabled: var(--gray\/300);
+  --icon\/error: var(--red\/500);
+  --icon\/primary: var(--gray\/950);
+  --brand\/primary: var(--pink\/500);
+
+  /* Semantic color aliases for Tailwind @theme inline */
+  --color-text-primary: var(--text\/primary);
+  --color-text-secondary: var(--text\/secondary);
+  --color-text-accent: var(--text\/accent);
+  --color-text-error: var(--text\/error);
+  --color-bg-default: var(--bg\/default);
+  --color-bg-surface: var(--bg\/surface);
+  --color-bg-subtle: var(--bg\/subtle);
+  --color-bg-inverse: var(--bg\/inverse);
+  --color-fill-primary: var(--fill\/primary);
+  --color-fill-secondary: var(--fill\/secondary);
+  --color-fill-disabled: var(--fill\/disabled);
+  --color-border-default: var(--border\/default);
+  --color-border-subtle: var(--border\/subtle);
+  --color-border-focus: var(--border\/focus);
+  --color-brand-primary: var(--brand\/primary);
+}
+
+@theme inline {
+  --color-background: var(--bg\/surface);
+  --color-foreground: var(--text\/primary);
+  --color-primary: var(--fill\/primary);
+  --color-primary-foreground: var(--gray\/0);
+  --color-secondary: var(--fill\/secondary);
+  --color-secondary-foreground: var(--gray\/0);
+  --color-muted: var(--bg\/subtle);
+  --color-muted-foreground: var(--text\/secondary);
+  --color-accent: var(--text\/accent);
+  --color-accent-foreground: var(--gray\/0);
+  --color-destructive: var(--text\/error);
+  --color-border: var(--border\/default);
+  --color-input: var(--border\/default);
+  --color-ring: var(--border\/focus);
+}
+
+.heading-h1 {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 44px;
+}
+.heading-h2 {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 40px;
+}
+.heading-h3 {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+.heading-h4 {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.subtitle-bold {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+}
+.subtitle-default {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+.body-strong {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.body-medium {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.body-small-strong {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+.body-small-medium {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+}
+.caption-medium {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.caption-bold {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 18px;
+}
+.caption-small {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+.caption-mini {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 14px;
+}
+
+body {
+  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg\/default);
+  color: var(--text\/primary);
+  -webkit-font-smoothing: antialiased;
+}

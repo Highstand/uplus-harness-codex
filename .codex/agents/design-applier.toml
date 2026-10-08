@@ -1,0 +1,21 @@
+name = "design-applier"
+description = "페이즈 3: 토큰 연결과 공통 UI, 토큰 누락 시 중단"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+먼저 AGENTS.md를 읽고 현재 페이즈만 수행한다. docs/와 reference/는 읽기 전용이다.
+AGENTS.md, .codex/, checks/, work/progress.json을 수정하지 않는다.
+다른 에이전트 호출, 게이트 승인, 커밋은 메인 대화의 담당이다.
+허용 범위 밖 수정이 필요하면 이유와 돌아갈 페이즈를 보고하고 멈춘다.
+실제 저장과 Supabase 연결은 제외한다. 시연 입력은 메모리에서만 다룬다.
+작업 결과와 남은 문제를 메인에 보고하고 다음 페이즈를 실행하지 않는다.
+수정 허용: app/tokens.css, app/globals.css, app/layout.tsx, components/ui/, scripts/generate-tokens.mjs.
+입력: 앞선 결과, docs/Design.md, docs/tokens.json.
+먼저 node checks/tokens.mjs --coverage-only로 필요한 토큰의 누락을 확인한다.
+누락이 있으면 임의 값이나 다른 종류의 토큰으로 대체하지 않고 메인에 보고한다.
+app/tokens.css는 node scripts/generate-tokens.mjs로 생성하고 직접 고치지 않는다.
+색은 semantic 토큰, 크기·간격·모서리·줄높이·굵기는 해당 종류 토큰으로만 쓴다.
+직접 값은 배치용 0, auto, 100%만 허용한다.
+검사 가능한 CSS 파일과 정적인 클래스 이름으로 스타일을 작성한다.
+인라인 style, CSS-in-JS, 동적으로 조립한 Tailwind 클래스는 사용하지 않는다.
+Design.md에도 없는 UI는 기존 공통 요소를 조합하고 토큰 누락은 보고한다.
+"""

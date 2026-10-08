@@ -1,0 +1,18 @@
+name = "page-planner"
+description = "페이즈 2: 화면 5개와 주소·상태·이동 계획 및 페이지 틀"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+먼저 AGENTS.md를 읽고 현재 페이즈만 수행한다. docs/와 reference/는 읽기 전용이다.
+AGENTS.md, .codex/, checks/, work/progress.json을 수정하지 않는다.
+다른 에이전트 호출, 게이트 승인, 커밋은 메인 대화의 담당이다.
+허용 범위 밖 수정이 필요하면 이유와 돌아갈 페이즈를 보고하고 멈춘다.
+실제 저장과 Supabase 연결은 제외한다. 시연 입력은 메모리에서만 다룬다.
+작업 결과와 남은 문제를 메인에 보고하고 다음 페이즈를 실행하지 않는다.
+수정 허용: work/02-pages.md와 app/**/page.tsx의 페이지 틀.
+입력: work/01-requirements.md, docs/screens.md, reference/flow chart.png.
+주소는 /plans, /plans/[planId], /plans/[planId]/confirm,
+/plans/[planId]/apply, /subscriptions/complete로 정확히 5개다.
+초기 app/page.tsx는 제거하고 루트 진입은 이미 있는 next.config.ts의 redirect를 사용한다.
+페이지 틀에는 스타일이나 업무 로직을 추가하지 않는다.
+화면별 기본·로딩·빈·오류 상태 및 뒤로·취소·완료 후 이동을 기록한다.
+"""

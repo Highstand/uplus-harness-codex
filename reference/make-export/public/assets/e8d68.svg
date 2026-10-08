@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Checkbox">
+<path id="Union" d="M20 2C20.5304 2 21.039 2.21086 21.4141 2.58594C21.7891 2.96101 22 3.46957 22 4V20C22 20.5304 21.7891 21.039 21.4141 21.4141C21.039 21.7891 20.5304 22 20 22H4C3.46957 22 2.96101 21.7891 2.58594 21.4141C2.21086 21.039 2 20.5304 2 20V4C2 3.46957 2.21086 2.96101 2.58594 2.58594C2.96101 2.21086 3.46957 2 4 2H20Z" fill="#FF2E98"/>
+<path id="check" d="M17.6667 8L10.3333 15.3333L7 12" stroke="#F7F7F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "phase": 1,
+  "status": "ready",
+  "announced": false,
+  "commitRequired": false,
+  "gates": {},
+  "rerun": [],
+  "message": "아직 어떤 페이즈도 실행하지 않았습니다."
+}

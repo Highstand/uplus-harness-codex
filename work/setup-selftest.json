@@ -1,0 +1,151 @@
+{
+  "ok": true,
+  "passed": 36,
+  "total": 36,
+  "results": [
+    {
+      "name": "화면 5개와 주소 5개 일치",
+      "ok": true
+    },
+    {
+      "name": "주소가 다른 5개도 실패",
+      "ok": true
+    },
+    {
+      "name": "여섯 번째 페이지는 실패",
+      "ok": true
+    },
+    {
+      "name": "semantic 토큰과 배치 값은 통과",
+      "ok": true
+    },
+    {
+      "name": "hex 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "rgb 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "색상 이름 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "토큰과 같은 직접 숫자 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "토큰 밖 반경 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "직접 굵기 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "직접 줄높이 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "primitive 색상 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "다른 종류 토큰 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "없는 변수 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "fallback 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "재정의 위반 차단",
+      "ok": true
+    },
+    {
+      "name": "임의 Tailwind 클래스 차단",
+      "ok": true
+    },
+    {
+      "name": "인라인 스타일 차단",
+      "ok": true
+    },
+    {
+      "name": "생성 CSS의 hex는 제외되고 원본 일치로 통과",
+      "ok": true
+    },
+    {
+      "name": "생성 CSS 변조는 실패",
+      "ok": true
+    },
+    {
+      "name": "줄높이·굵기 누락은 3단계 실패",
+      "ok": true
+    },
+    {
+      "name": "R1 금지 문구 위반 실패; 문서 제외",
+      "ok": true
+    },
+    {
+      "name": "안내 없이 진행 불가",
+      "ok": true
+    },
+    {
+      "name": "시작은 안내만 하고 실행하지 않음",
+      "ok": true
+    },
+    {
+      "name": "진행해 이후 1단계 사람 게이트에서 정지",
+      "ok": true
+    },
+    {
+      "name": "사람 승인 뒤에도 커밋 전 다음 페이즈 불가",
+      "ok": true
+    },
+    {
+      "name": "입력 변경 시 가장 이른 단계부터 이후 판정 무효",
+      "ok": true
+    },
+    {
+      "name": "실행 전 에이전트 호출을 훅에서 거절",
+      "ok": true
+    },
+    {
+      "name": "실행 전 파일 쓰기를 훅에서 거절",
+      "ok": true
+    },
+    {
+      "name": "허용된 파일의 패치 통과, docs 수정 거절",
+      "ok": true
+    },
+    {
+      "name": "추가될 hex를 쓰기 전에 훅에서 거절",
+      "ok": true
+    },
+    {
+      "name": "멀티 파일 패치에서 토큰 생성 파일로 위장 금지",
+      "ok": true
+    },
+    {
+      "name": "셸 쓰기 우회 차단",
+      "ok": true
+    },
+    {
+      "name": "PostToolUse가 이미 쓰인 위반도 발견",
+      "ok": true
+    },
+    {
+      "name": "페이즈 1 시작 프롬프트는 안내만 주입",
+      "ok": true
+    },
+    {
+      "name": "패치 경로 탈출 차단",
+      "ok": true
+    }
+  ]
+}

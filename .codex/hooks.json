@@ -1,0 +1,43 @@
+{
+  "description": "수업용 단계별 실행 및 토큰 검사. /hooks에서 검토·승인 후 실행됩니다.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/bibi/uplus-harness-codex/checks/hook.mjs\"",
+            "timeout": 10,
+            "statusMessage": "페이즈·토큰 규칙 확인"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(Bash|apply_patch|Edit|Write|spawn_agent|Agent)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/bibi/uplus-harness-codex/checks/hook.mjs\"",
+            "timeout": 10,
+            "statusMessage": "페이즈·토큰 규칙 확인"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Bash|apply_patch|Edit|Write)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/bibi/uplus-harness-codex/checks/hook.mjs\"",
+            "timeout": 10,
+            "statusMessage": "페이즈·토큰 규칙 확인"
+          }
+        ]
+      }
+    ]
+  }
+}
